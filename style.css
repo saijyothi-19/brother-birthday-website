@@ -85,7 +85,7 @@ button {
 }
 
 /* --------------------------------------------------------------------------
-   CANVAS LAYERS (Ambient Background & Celebration)
+   CANVAS LAYERS (Ambient Background, Celebration & Magic Cursor)
    -------------------------------------------------------------------------- */
 #ambient-canvas,
 #celebration-canvas {
@@ -103,6 +103,20 @@ button {
 
 #celebration-canvas {
   z-index: 999;
+}
+
+/* Magic Sparkle Cursor Canvas — Positioned above all layers, pointer-events none */
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999;
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* --------------------------------------------------------------------------

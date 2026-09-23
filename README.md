@@ -181,6 +181,7 @@ git commit -m "Initial commit: Complete interactive birthday website"
 ---
 
 ## 🌟 Quality & Accessibility Features
+- **Magic Sparkle Cursor:** Elegant GPU-accelerated canvas sparkle trail and click burst, with subtle hover aura and automatic touch-screen suppression.
 - **Zero AI replacements:** 100% authentic personal photographs preserved.
 - **Fluid Responsiveness:** Tested for iPhone, Android, iPad, laptops, and ultra-wide displays.
 - **No external frameworks:** Ultra-lightweight Vanilla JS and pure CSS (under 100ms load time).

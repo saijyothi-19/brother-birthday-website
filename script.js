@@ -959,4 +959,377 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const celebrationManager = new CelebrationManager();
 
+  // ========================================================================
+  // 9. MAGIC SPARKLE CURSOR (HIGH VISIBILITY & PERFORMANCE)
+  // ========================================================================
+  class MagicSparkleCursor {
+    constructor() {
+      this.canvas = document.getElementById('cursor-canvas');
+      if (!this.canvas) return;
+
+      this.ctx = this.canvas.getContext('2d');
+      if (!this.ctx) return;
+
+      this.width = 0;
+      this.height = 0;
+      this.mouseX = -100;
+      this.mouseY = -100;
+      this.cursorX = -100;
+      this.cursorY = -100;
+      this.lastSparkleX = -100;
+      this.lastSparkleY = -100;
+      this.isInsideWindow = false;
+      this.isTouchOnly = false;
+
+      // Accessibility
+      this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
+        this.prefersReducedMotion = e.matches;
+      });
+
+      // Hover states: 'default' | 'interactive' | 'photo'
+      this.hoverState = 'default';
+      this.hoverHaloRadius = 18;
+      this.targetHaloRadius = 18;
+
+      // Particle pool
+      this.sparkles = [];
+      this.maxSparkles = 60;
+
+      // Palette of radiant celebration colors
+      this.palette = [
+        '#ffffff', // Crisp white
+        '#ffdf80', // Soft luminous gold
+        '#f6d365', // Rich amber gold
+        '#ffd700', // Brilliant gold
+        '#c084fc', // Delicate lavender
+        '#818cf8', // Radiant violet
+        '#fda085'  // Warm champagne
+      ];
+
+      this.resize();
+      window.addEventListener('resize', () => this.resize());
+
+      this.bindEvents();
+      this.animate();
+    }
+
+    resize() {
+      this.width = this.canvas.width = window.innerWidth;
+      this.height = this.canvas.height = window.innerHeight;
+    }
+
+    bindEvents() {
+      // Handle Mouse / Pointer Move
+      const handleMove = (clientX, clientY, pointerType) => {
+        if (pointerType === 'touch') {
+          this.isTouchOnly = true;
+          this.isInsideWindow = false;
+          return;
+        }
+
+        this.isTouchOnly = false;
+        this.isInsideWindow = true;
+        this.mouseX = clientX;
+        this.mouseY = clientY;
+
+        // Snap immediately on first movement into viewport
+        if (this.cursorX < 0) {
+          this.cursorX = this.mouseX;
+          this.cursorY = this.mouseY;
+          this.lastSparkleX = this.mouseX;
+          this.lastSparkleY = this.mouseY;
+        }
+
+        // Distance-based sparkle spawning along trail
+        if (!this.prefersReducedMotion) {
+          const dist = Math.hypot(this.mouseX - this.lastSparkleX, this.mouseY - this.lastSparkleY);
+          const threshold = this.hoverState === 'photo' ? 9 : 12;
+
+          if (dist > threshold) {
+            this.spawnSparkle(this.mouseX, this.mouseY);
+            if (this.hoverState === 'photo' || Math.random() < 0.35) {
+              this.spawnSparkle(this.mouseX, this.mouseY);
+            }
+            this.lastSparkleX = this.mouseX;
+            this.lastSparkleY = this.mouseY;
+          }
+        }
+      };
+
+      window.addEventListener('pointermove', (e) => {
+        handleMove(e.clientX, e.clientY, e.pointerType);
+        this.checkHoverTarget(e.target);
+      }, { passive: true });
+
+      window.addEventListener('mousemove', (e) => {
+        handleMove(e.clientX, e.clientY, 'mouse');
+        this.checkHoverTarget(e.target);
+      }, { passive: true });
+
+      // Detect touch start to suppress custom cursor on touch devices
+      window.addEventListener('touchstart', () => {
+        this.isTouchOnly = true;
+        this.isInsideWindow = false;
+      }, { passive: true });
+
+      // Leave / Enter Window
+      document.addEventListener('pointerleave', () => {
+        this.isInsideWindow = false;
+      });
+      document.addEventListener('mouseleave', () => {
+        this.isInsideWindow = false;
+      });
+      document.addEventListener('pointerenter', () => {
+        if (!this.isTouchOnly) this.isInsideWindow = true;
+      });
+      document.addEventListener('mouseenter', () => {
+        if (!this.isTouchOnly) this.isInsideWindow = true;
+      });
+
+      // Click burst
+      const handleClick = (clientX, clientY, pointerType) => {
+        if (pointerType === 'touch') return;
+        if (this.prefersReducedMotion) return;
+        this.triggerClickBurst(clientX, clientY);
+      };
+
+      window.addEventListener('pointerdown', (e) => {
+        handleClick(e.clientX, e.clientY, e.pointerType);
+      }, { passive: true });
+
+      window.addEventListener('click', (e) => {
+        if (e.clientX && e.clientY) {
+          handleClick(e.clientX, e.clientY, 'mouse');
+        }
+      }, { passive: true });
+    }
+
+    checkHoverTarget(target) {
+      if (!target || !(target instanceof Element)) return;
+
+      const isPhoto = target.closest('.carousel-card-item, .memory-card, .hero-photo-frame, .final-portrait-holder, .milestone-card');
+      const isInteractive = target.closest('button, a, .carousel-arrow-btn, .carousel-dot, .lightbox-btn, [role="button"], .enter-celebration-btn, .music-toggle-btn');
+
+      const prevHover = this.hoverState;
+
+      if (isPhoto) {
+        this.hoverState = 'photo';
+        this.targetHaloRadius = 32;
+      } else if (isInteractive) {
+        this.hoverState = 'interactive';
+        this.targetHaloRadius = 26;
+      } else {
+        this.hoverState = 'default';
+        this.targetHaloRadius = 18;
+      }
+
+      // If entering hover target, spawn 2-3 celebratory micro-sparkles
+      if (prevHover !== this.hoverState && this.hoverState !== 'default' && !this.prefersReducedMotion) {
+        const count = this.hoverState === 'photo' ? 3 : 2;
+        for (let i = 0; i < count; i++) {
+          this.spawnSparkle(this.mouseX, this.mouseY, true);
+        }
+      }
+    }
+
+    spawnSparkle(originX, originY, isHoverSpark = false) {
+      if (this.sparkles.length >= this.maxSparkles) {
+        this.sparkles.shift();
+      }
+
+      // Clearly visible star size: 7px - 12px outer radius
+      const outerR = isHoverSpark ? (Math.random() * 4 + 8) : (Math.random() * 5 + 7);
+      const innerR = outerR * 0.28;
+      const points = Math.random() > 0.4 ? 4 : 5;
+      const color = this.palette[Math.floor(Math.random() * this.palette.length)];
+      const lifetime = Math.random() * 400 + 500; // 500ms - 900ms
+
+      this.sparkles.push({
+        x: originX + (Math.random() - 0.5) * (isHoverSpark ? 18 : 10),
+        y: originY + (Math.random() - 0.5) * (isHoverSpark ? 18 : 10),
+        vx: (Math.random() - 0.5) * (isHoverSpark ? 1.0 : 0.4),
+        vy: (Math.random() - 0.5) * (isHoverSpark ? 1.0 : 0.4) - 0.25, // gentle buoyant drift upward
+        outerR: outerR,
+        innerR: innerR,
+        points: points,
+        angle: Math.random() * Math.PI * 2,
+        angleSpeed: (Math.random() - 0.5) * 0.08,
+        color: color,
+        birth: performance.now(),
+        lifetime: lifetime,
+        maxAlpha: Math.random() * 0.15 + 0.85
+      });
+    }
+
+    triggerClickBurst(originX, originY) {
+      const count = 12; // 12 radiant stars
+      for (let i = 0; i < count; i++) {
+        if (this.sparkles.length >= this.maxSparkles + 15) break;
+
+        const angle = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.35;
+        const speed = Math.random() * 2.8 + 1.8;
+        const outerR = Math.random() * 5 + 9; // 9px to 14px
+        const innerR = outerR * 0.28;
+        const points = Math.random() > 0.35 ? 4 : 5;
+        const color = this.palette[Math.floor(Math.random() * this.palette.length)];
+
+        this.sparkles.push({
+          x: originX,
+          y: originY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          outerR: outerR,
+          innerR: innerR,
+          points: points,
+          angle: angle,
+          angleSpeed: (Math.random() - 0.5) * 0.12,
+          color: color,
+          birth: performance.now(),
+          lifetime: Math.random() * 200 + 600, // 600 - 800ms
+          maxAlpha: 1.0
+        });
+      }
+    }
+
+    drawStar(ctx, x, y, outerR, innerR, points, angle, color, alpha) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.rotate(angle);
+
+      // Star shape
+      ctx.beginPath();
+      const step = Math.PI / points;
+      for (let i = 0; i < 2 * points; i++) {
+        const r = (i % 2 === 0) ? outerR : innerR;
+        const a = i * step - Math.PI / 2;
+        if (i === 0) ctx.moveTo(r * Math.cos(a), r * Math.sin(a));
+        else ctx.lineTo(r * Math.cos(a), r * Math.sin(a));
+      }
+      ctx.closePath();
+
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = color;
+      ctx.globalAlpha = Math.max(0, Math.min(1, alpha));
+      ctx.fill();
+
+      // Bright center sparkle core
+      ctx.beginPath();
+      ctx.arc(0, 0, Math.max(1, outerR * 0.18), 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = Math.max(0, Math.min(1, alpha * 1.1));
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    drawCentralCursor(ctx) {
+      if (!this.isInsideWindow || this.cursorX < 0 || this.isTouchOnly) return;
+
+      // Smooth lerp halo radius
+      this.hoverHaloRadius += (this.targetHaloRadius - this.hoverHaloRadius) * 0.18;
+      const r = this.hoverHaloRadius;
+
+      ctx.save();
+
+      // Outer soft radial luminous glow
+      const glowGrad = ctx.createRadialGradient(this.cursorX, this.cursorY, 0, this.cursorX, this.cursorY, r);
+      if (this.hoverState === 'photo') {
+        glowGrad.addColorStop(0, 'rgba(255, 223, 128, 0.7)');
+        glowGrad.addColorStop(0.45, 'rgba(246, 211, 101, 0.4)');
+        glowGrad.addColorStop(0.75, 'rgba(168, 85, 247, 0.25)');
+        glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      } else if (this.hoverState === 'interactive') {
+        glowGrad.addColorStop(0, 'rgba(255, 255, 255, 0.75)');
+        glowGrad.addColorStop(0.4, 'rgba(192, 132, 252, 0.5)');
+        glowGrad.addColorStop(0.75, 'rgba(246, 211, 101, 0.25)');
+        glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      } else {
+        glowGrad.addColorStop(0, 'rgba(255, 223, 128, 0.6)');
+        glowGrad.addColorStop(0.4, 'rgba(246, 211, 101, 0.35)');
+        glowGrad.addColorStop(0.7, 'rgba(139, 92, 246, 0.18)');
+        glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      }
+
+      ctx.beginPath();
+      ctx.arc(this.cursorX, this.cursorY, r, 0, Math.PI * 2);
+      ctx.fillStyle = glowGrad;
+      ctx.globalAlpha = 1;
+      ctx.fill();
+
+      // Permanent small glowing star shimmer at cursor point (so it's clearly visible even when moving slowly)
+      const shimmerAngle = (performance.now() * 0.002) % (Math.PI * 2);
+      const shimmerPulse = Math.sin(performance.now() * 0.005) * 1.5 + 5.5; // 4px - 7px
+      this.drawStar(ctx, this.cursorX, this.cursorY, shimmerPulse, shimmerPulse * 0.28, 4, shimmerAngle, '#ffffff', 0.95);
+
+      // Central pearl core
+      ctx.beginPath();
+      ctx.arc(this.cursorX, this.cursorY, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = '#ffd700';
+      ctx.globalAlpha = 1;
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    animate() {
+      if (document.hidden) {
+        requestAnimationFrame(() => this.animate());
+        return;
+      }
+
+      this.ctx.clearRect(0, 0, this.width, this.height);
+
+      // Smooth cursor follow with lerp
+      if (this.isInsideWindow && this.mouseX >= 0 && !this.isTouchOnly) {
+        this.cursorX += (this.mouseX - this.cursorX) * 0.22;
+        this.cursorY += (this.mouseY - this.cursorY) * 0.22;
+      }
+
+      const now = performance.now();
+
+      // Render sparkles
+      for (let i = this.sparkles.length - 1; i >= 0; i--) {
+        const s = this.sparkles[i];
+        const elapsed = now - s.birth;
+
+        if (elapsed >= s.lifetime) {
+          this.sparkles.splice(i, 1);
+          continue;
+        }
+
+        const progress = elapsed / s.lifetime; // 0 to 1
+        s.x += s.vx;
+        s.y += s.vy;
+        s.angle += s.angleSpeed;
+
+        // Scale down and fade out
+        const currentScale = Math.max(0.25, 1 - progress * 0.65);
+        const currentAlpha = s.maxAlpha * (1 - progress);
+
+        this.drawStar(
+          this.ctx,
+          s.x,
+          s.y,
+          s.outerR * currentScale,
+          s.innerR * currentScale,
+          s.points,
+          s.angle,
+          s.color,
+          currentAlpha
+        );
+      }
+
+      // Draw permanent central follower cursor
+      this.drawCentralCursor(this.ctx);
+
+      requestAnimationFrame(() => this.animate());
+    }
+  }
+
+  const magicSparkleCursor = new MagicSparkleCursor();
+
 });
