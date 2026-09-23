@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Happy Birthday, My Brother | A Special Celebration</title>
+  <meta name="description" content="A cinematic, interactive birthday celebration dedicated to my brother. Featuring real memories, 3D photo wall, and heartfelt wishes.">
+  <meta name="theme-color" content="#070913">
+
+  <!-- Google Fonts for High Typographic Elegance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="is-intro-locked">
+
+  <!-- Background Canvas for Ambient Stars & Floating Sparks -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Celebration Fireworks & Confetti Canvas Overlay -->
+  <canvas id="celebration-canvas" aria-hidden="true"></canvas>
+
+  <!-- ==================================================
+       SECTION 1: CINEMATIC INTRO SCREEN
+       ================================================== -->
+  <section id="intro-screen" class="intro-screen" aria-label="Intro Welcome Screen">
+    <div class="intro-stars-layer" aria-hidden="true"></div>
+    <div class="intro-content">
+      <div class="intro-quote-container">
+        <p class="intro-line line-1" id="intro-line-1">
+          Some people make life brighter<br>
+          <span class="gold-gradient-text">just by being a part of it...</span>
+        </p>
+        <p class="intro-line line-2" id="intro-line-2">
+          And today,<br>
+          <span class="glow-accent-text">we celebrate one of them.</span>
+        </p>
+      </div>
+
+      <div class="intro-cta-wrapper" id="intro-cta-wrapper">
+        <button id="enter-btn" class="enter-celebration-btn" aria-label="Enter the Birthday Celebration">
+          <span class="btn-sparkle-icon">✨</span>
+          <span class="btn-text">ENTER THE CELEBRATION</span>
+          <span class="btn-sparkle-icon">✨</span>
+          <span class="btn-glow-ring"></span>
+        </button>
+        <p class="intro-sound-hint">Click to experience with music & visuals</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================
+       FLOATING GLASSMORPHIC NAVIGATION
+       ================================================== -->
+  <header id="main-header" class="main-header" aria-label="Main Navigation">
+    <nav class="nav-glass-bar" aria-label="Quick Links">
+      <a href="#hero" class="nav-brand-logo" aria-label="Birthday Home">
+        <span class="logo-spark">✨</span> <span class="logo-text">BROTHER</span>
+      </a>
+
+      <ul class="nav-links-list" id="nav-links">
+        <li><a href="#hero" class="nav-link active">Home</a></li>
+        <li><a href="#journey" class="nav-link">Journey</a></li>
+        <li><a href="#photo-wall" class="nav-link">3D Vault</a></li>
+        <li><a href="#memory-wall" class="nav-link">Memories</a></li>
+        <li><a href="#success-wishes" class="nav-link">Wishes</a></li>
+      </ul>
+
+      <!-- Audio Controller -->
+      <div class="nav-actions">
+        <button id="music-toggle-btn" class="music-toggle-btn" aria-label="Toggle background music" title="Toggle Music">
+          <span class="music-icon" id="music-icon">🎵</span>
+          <span class="sound-wave-bars" aria-hidden="true">
+            <span class="bar bar-1"></span>
+            <span class="bar bar-2"></span>
+            <span class="bar bar-3"></span>
+            <span class="bar bar-4"></span>
+          </span>
+          <span class="music-btn-label" id="music-btn-label">Music: On</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hidden Audio Element with Fallbacks -->
+  <audio id="bg-audio" preload="auto" loop>
+    <source src="assets/music/celebration.mp3" type="audio/mpeg">
+    <source src="assets/music/birthday.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- ==================================================
+       MAIN CONTENT CONTAINER
+       ================================================== -->
+  <main id="main-content" class="main-content">
+
+    <!-- ==================================================
+         SECTION 2: BIRTHDAY HERO
+         ================================================== -->
+    <section id="hero" class="hero-section" aria-label="Birthday Hero Section">
+      <div class="hero-radial-glow" aria-hidden="true"></div>
+
+      <div class="hero-grid-layout">
+        <!-- Text Column -->
+        <div class="hero-text-col reveal-on-scroll">
+          <div class="badge-pill">
+            <span class="badge-dot"></span>
+            <span class="badge-title">A DIGITAL CELEBRATION</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="hero-subtitle-top">HAPPY BIRTHDAY</span>
+            <span class="hero-brother-name gold-gradient-text">MY BROTHER ❤️</span>
+          </h1>
+
+          <div class="hero-quote-box glass-panel">
+            <p class="hero-quote-text">
+              “Another year. Another chapter.<br>
+              Another opportunity to become everything you dream of.”
+            </p>
+          </div>
+
+          <div class="hero-action-buttons">
+            <a href="#photo-wall" class="action-btn primary-glow-btn">
+              <span>Explore 3D Photo Vault</span>
+              <span class="btn-arrow">→</span>
+            </a>
+            <a href="#journey" class="action-btn secondary-glass-btn">
+              <span>View Your Journey</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Photograph Showcase with Ken-Burns pan/zoom -->
+        <div class="hero-visual-col reveal-on-scroll delay-1">
+          <div class="hero-photo-frame glass-panel">
+            <div class="photo-glow-halo"></div>
+            <div class="hero-image-wrapper">
+              <img 
+                src="assets/images/photo-01-traditional-kurta.jpg" 
+                alt="My brother looking regal in a traditional white kurta beside an ornate golden pillar" 
+                class="hero-cinematic-img"
+                loading="eager"
+              >
+            </div>
+            <div class="hero-photo-caption">
+              <span class="caption-tag">Heritage & Dignity</span>
+              <span class="caption-title">Strength, Honor & Grace</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <a href="#journey" class="hero-scroll-indicator" aria-label="Scroll to begin journey">
+        <span class="scroll-mouse-icon">
+          <span class="scroll-wheel"></span>
+        </span>
+        <span class="scroll-label">Scroll to begin the journey ↓</span>
+      </a>
+    </section>
+
+    <!-- ==================================================
+         SECTION 3: HIS JOURNEY (STORYTELLING)
+         ================================================== -->
+    <section id="journey" class="journey-section" aria-label="Storytelling Journey Section">
+      <div class="section-container">
+        
+        <div class="section-header-centered reveal-on-scroll">
+          <span class="sub-badge">CHAPTERS OF CHARACTER</span>
+          <h2 class="section-heading">YOUR JOURNEY</h2>
+          <div class="journey-quote-banner glass-panel">
+            <p>
+              “Every achievement begins with a dream,<br>
+              but it is <strong>hard work, patience and courage</strong><br>
+              that turns that dream into reality.”
+            </p>
+          </div>
+        </div>
+
+        <!-- 5 Sequential Milestone Cards -->
+        <div class="journey-milestones-grid">
+          
+          <!-- Milestone 1: DREAMS -->
+          <article class="milestone-card glass-panel reveal-on-scroll">
+            <div class="milestone-badge">01</div>
+            <div class="milestone-img-container">
+              <img 
+                src="assets/images/photo-04-nature-mountain.jpg" 
+                alt="Standing atop lush green mountains with sunglasses and beanie" 
+                class="milestone-img"
+                loading="lazy"
+              >
+            </div>
+            <div class="milestone-info">
+              <h3 class="milestone-word gold-gradient-text">DREAMS</h3>
+              <p class="milestone-desc">
+                Looking out towards endless horizons. It begins with the courage to envision what lies beyond the climb.
+              </p>
+            </div>
+          </article>
+
+          <!-- Milestone 2: HARD WORK -->
+          <article class="milestone-card glass-panel reveal-on-scroll delay-1">
+            <div class="milestone-badge">02</div>
+            <div class="milestone-img-container">
+              <img 
+                src="assets/images/photo-02-heritage-bike-standing.jpg" 
+                alt="Standing determined beside motorcycle with heritage facade" 
+                class="milestone-img"
+                loading="lazy"
+              >
+            </div>
+            <div class="milestone-info">
+              <h3 class="milestone-word gold-gradient-text">HARD WORK</h3>
+              <p class="milestone-desc">
+                Quiet preparation, early mornings, and showing up every single day with relentless dedication.
+              </p>
+            </div>
+          </article>
+
+          <!-- Milestone 3: CHALLENGES -->
+          <article class="milestone-card glass-panel reveal-on-scroll delay-2">
+            <div class="milestone-badge">03</div>
+            <div class="milestone-img-container">
+              <img 
+                src="assets/images/photo-09-ocean-beach.jpg" 
+                alt="Standing resilient amidst crashing ocean shoreline waves" 
+                class="milestone-img"
+                loading="lazy"
+              >
+            </div>
+            <div class="milestone-info">
+              <h3 class="milestone-word gold-gradient-text">CHALLENGES</h3>
+              <p class="milestone-desc">
+                Standing firm while the tide rushes in. Unshaken by storms and emerging stronger with every wave.
+              </p>
+            </div>
+          </article>
+
+          <!-- Milestone 4: GROWTH -->
+          <article class="milestone-card glass-panel reveal-on-scroll delay-3">
+            <div class="milestone-badge">04</div>
+            <div class="milestone-img-container">
+              <img 
+                src="assets/images/photo-11-temple-night.jpg" 
+                alt="Night illumination by sacred temple gopuram" 
+                class="milestone-img"
+                loading="lazy"
+              >
+            </div>
+            <div class="milestone-info">
+              <h3 class="milestone-word gold-gradient-text">GROWTH</h3>
+              <p class="milestone-desc">
+                Grounding the spirit with humility, faith, and wisdom. Deepening character with time.
+              </p>
+            </div>
+          </article>
+
+          <!-- Milestone 5: SUCCESS -->
+          <article class="milestone-card glass-panel reveal-on-scroll delay-4">
+            <div class="milestone-badge">05</div>
+            <div class="milestone-img-container">
+              <img 
+                src="assets/images/photo-12-sunset-car.jpg" 
+                alt="Sunset golden hour celebration by O'Rica" 
+                class="milestone-img"
+                loading="lazy"
+              >
+            </div>
+            <div class="milestone-info">
+              <h3 class="milestone-word gold-gradient-text">SUCCESS</h3>
+              <p class="milestone-desc">
+                Turning vision into reality. Celebrating how far you've come while gearing up for all that is ahead.
+              </p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         SECTION 4 & 5: INTERACTIVE 3D PHOTO WALL & CARD FLIP
+         (MAIN FEATURE - ALL 13 AUTHENTIC PHOTOS)
+         ================================================== -->
+    <section id="photo-wall" class="photo-wall-section" aria-label="Interactive 3D Photo Wall">
+      <div class="section-container">
+        
+        <div class="section-header-centered reveal-on-scroll">
+          <span class="sub-badge">MAIN FEATURE</span>
+          <h2 class="section-heading">INTERACTIVE 3D PHOTO VAULT</h2>
+          <p class="section-subtext">
+            Every photo holds a memory. <strong>Click any card</strong> to flip it and reveal a personalized message for your journey.
+          </p>
+          <div class="flip-hint-pill">
+            <span class="flip-icon">🔄</span>
+            <span>Click card to Flip &bull; Swipe or use arrows to Navigate</span>
+          </div>
+        </div>
+
+        <!-- 3D Carousel Stage -->
+        <div class="carousel-3d-stage" id="carousel-3d-stage">
+          <div class="carousel-track" id="carousel-track">
+            
+            <!-- CARD 1 -->
+            <div class="carousel-card-item" data-index="0" role="button" tabindex="0" aria-label="Photo 1 of 13: Traditional Kurta. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-01-traditional-kurta.jpg" alt="Traditional white kurta portrait with golden pillar" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Golden Heritage</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Rooted in Dignity</h4>
+                  <p class="card-back-message">
+                    “Rooted in grace, rising with purpose. Your warmth and respect for tradition make everyone around you proud. Keep walking with this dignity and honor.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #1</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 2 -->
+            <div class="carousel-card-item" data-index="1" role="button" tabindex="0" aria-label="Photo 2 of 13: Heritage Bike Standing. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-02-heritage-bike-standing.jpg" alt="Standing next to white Karizma bike in front of stone heritage building" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Steadfast Path</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Belief in Yourself</h4>
+                  <p class="card-back-message">
+                    “Behind every smile is a journey. Keep your eyes on the road ahead, hold your spirit high, and never stop believing in where your journey will lead.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #2</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 3 -->
+            <div class="carousel-card-item" data-index="2" role="button" tabindex="0" aria-label="Photo 3 of 13: Heritage Bike Sitting. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-03-heritage-bike-sitting.jpg" alt="Sitting calmly on bike, stone architecture in background" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">The Open Road</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Master of Destiny</h4>
+                  <p class="card-back-message">
+                    “The open road belongs to those who dare to steer their own fate. Trust your instincts, cherish every mile, and let your courage guide every destination.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #3</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 4 -->
+            <div class="carousel-card-item" data-index="3" role="button" tabindex="0" aria-label="Photo 4 of 13: Mountain Vista. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-04-nature-mountain.jpg" alt="Scenic mountains, beanie and sunglasses" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Highest Peaks</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Fearless Ambition</h4>
+                  <p class="card-back-message">
+                    “Standing tall among the highest peaks. Remember that no mountain is too steep when your ambition is clear and your heart is steady.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #4</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 5 -->
+            <div class="carousel-card-item" data-index="4" role="button" tabindex="0" aria-label="Photo 5 of 13: Jordan Style. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-05-cafe-jordan.jpg" alt="Sitting in cafe patio with plants, navy Jordan 23 sweatshirt" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">True Champion</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Effortless Greatness</h4>
+                  <p class="card-back-message">
+                    “Effortless style, grounded soul. True champions don't just chase great numbers—they bring positivity, loyalty, and passion to everything they touch.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #5</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 6 -->
+            <div class="carousel-card-item" data-index="5" role="button" tabindex="0" aria-label="Photo 6 of 13: Modern Hallway. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-06-hallway-yellow.jpg" alt="Leaning against hallway wall with yellow ceiling accent" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Quiet Confidence</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Unstoppable Presence</h4>
+                  <p class="card-back-message">
+                    “Confidence is quiet; self-belief is loud. Walk through every door with your head held high—the world is ready for your brilliance.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #6</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 7 -->
+            <div class="carousel-card-item" data-index="6" role="button" tabindex="0" aria-label="Photo 7 of 13: Blue Plaid Selfie. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-07-plaid-selfie.jpg" alt="Mirror selfie in blue plaid button-down shirt" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Authentic Spirit</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Always True to You</h4>
+                  <p class="card-back-message">
+                    “Be proud of who you are and where you've come from. Every single day, you are shaping the leader, brother, and person you were destined to be.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #7</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 8 -->
+            <div class="carousel-card-item" data-index="7" role="button" tabindex="0" aria-label="Photo 8 of 13: Celebration Vibe. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-08-event-floral.jpg" alt="Celebration decor with flowers, floral shirt and sunglasses" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Vibrant Joy</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Light in Any Room</h4>
+                  <p class="card-back-message">
+                    “Bringer of energy and genuine joy. Your presence lights up rooms and turns simple gatherings into unforgettable memories. Never lose that spark.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #8</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 9 -->
+            <div class="carousel-card-item" data-index="8" role="button" tabindex="0" aria-label="Photo 9 of 13: Ocean Tide. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-09-ocean-beach.jpg" alt="Beach shoreline, GAP hoodie and sunglasses" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Resilient Tide</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Calm Amidst Waves</h4>
+                  <p class="card-back-message">
+                    “Like the ocean tides, you face every wave with quiet resilience. May every challenge make you stronger, and may you always ride the storms with calm resolve.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #9</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 10 -->
+            <div class="carousel-card-item" data-index="9" role="button" tabindex="0" aria-label="Photo 10 of 13: Forest Bridge. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-10-forest-bridge.jpg" alt="Lush forest wooden bridge, floral shirt & white linen pants" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Nature's Peace</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Grounded Growth</h4>
+                  <p class="card-back-message">
+                    “Finding peace amidst the wild rush of life. Bridge every gap with kindness, stay close to what grounds you, and keep growing tall like the trees.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #10</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 11 -->
+            <div class="carousel-card-item" data-index="10" role="button" tabindex="0" aria-label="Photo 11 of 13: Temple Night. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-11-temple-night.jpg" alt="Night portrait in front of temple gopuram shrine" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Sacred Strength</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Divine Light</h4>
+                  <p class="card-back-message">
+                    “Blessed with quiet faith, inner peace, and divine strength. May blessings always surround your path and light up your darkest nights.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #11</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 12 -->
+            <div class="carousel-card-item" data-index="11" role="button" tabindex="0" aria-label="Photo 12 of 13: Golden Sunset Car. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-12-sunset-car.jpg" alt="Golden hour sunset leaning on silver car outside O'Rica cafe" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Golden Ambition</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">Drive to Greatness</h4>
+                  <p class="card-back-message">
+                    “Chasing sunsets and turning ambition into reality. Your hard work today is paving highways of triumph for tomorrow. Keep driving towards greatness.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #12</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CARD 13 -->
+            <div class="carousel-card-item" data-index="12" role="button" tabindex="0" aria-label="Photo 13 of 13: Modern Elegance. Click to flip for message.">
+              <div class="flip-card-inner">
+                <div class="flip-card-front glass-panel">
+                  <div class="card-img-holder">
+                    <img src="assets/images/photo-13-retail-knit-sweater.jpg" alt="Modern retail aisle portrait in brown cable-knit sweater and silver chain" loading="lazy">
+                  </div>
+                  <div class="card-front-bar">
+                    <span class="photo-title">Endless Potential</span>
+                    <span class="flip-prompt">Flip ↻</span>
+                  </div>
+                </div>
+                <div class="flip-card-back glass-panel">
+                  <div class="card-back-ornament">✦</div>
+                  <h4 class="card-back-title">The Future Awaits</h4>
+                  <p class="card-back-message">
+                    “Sharp mind, warm heart, and infinite potential. Your journey is still being written, and the finest, brightest chapters are all waiting ahead for you.”
+                  </p>
+                  <div class="card-back-footer">
+                    <span class="card-author">&mdash; From Family &bull; Card #13</span>
+                    <span class="card-return-hint">Click to flip back ↺</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-nav-controls">
+            <button id="carousel-prev-btn" class="carousel-arrow-btn" aria-label="Previous Photo Card">
+              <span>&#8592;</span>
+            </button>
+
+            <!-- Indicators / Dot counter -->
+            <div class="carousel-counter-pill" id="carousel-counter-pill">
+              <span id="current-card-num">1</span>
+              <span class="counter-sep">/</span>
+              <span>13</span>
+            </div>
+
+            <button id="carousel-next-btn" class="carousel-arrow-btn" aria-label="Next Photo Card">
+              <span>&#8594;</span>
+            </button>
+          </div>
+
+          <!-- Carousel Dots Track -->
+          <div class="carousel-dots-list" id="carousel-dots" role="tablist" aria-label="Carousel navigation dots"></div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         SECTION 6: MESSAGE ABOUT SUCCESS
+         ================================================== -->
+    <section id="success-wishes" class="success-section" aria-label="Wishes for Success">
+      <div class="success-bg-blur-layer" aria-hidden="true"></div>
+      
+      <div class="section-container success-content-box">
+        <div class="badge-pill centered-badge reveal-on-scroll">
+          <span class="badge-dot"></span>
+          <span>WORDS FROM THE HEART</span>
+        </div>
+
+        <h2 class="success-title reveal-on-scroll">TO YOUR SUCCESS 🚀</h2>
+
+        <div class="success-stagger-lines">
+          <p class="success-line reveal-on-scroll">“May your hard work become achievement.”</p>
+          <p class="success-line reveal-on-scroll delay-1">“May your dreams become reality.”</p>
+          <p class="success-line reveal-on-scroll delay-2">“May every failure teach you something new.”</p>
+          <p class="success-line reveal-on-scroll delay-3">“May every challenge make you stronger.”</p>
+          <p class="success-line reveal-on-scroll delay-4">“May you always have the courage to aim higher.”</p>
+        </div>
+
+        <div class="success-closing-box glass-panel reveal-on-scroll delay-5">
+          <p class="closing-highlight gold-gradient-text">
+            And may your best chapters<br>
+            still be ahead of you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         SECTION 7: MEMORY WALL (MASONRY & LIGHTBOX)
+         ================================================== -->
+    <section id="memory-wall" class="memory-wall-section" aria-label="Photo Memory Gallery Wall">
+      <div class="section-container">
+        
+        <div class="section-header-centered reveal-on-scroll">
+          <span class="sub-badge">GALLERY OF MEMORIES</span>
+          <h2 class="section-heading">THE MEMORY WALL</h2>
+          <p class="section-subtext">
+            Every frame captures a story, an expression, and a proud memory. Click any photo to inspect in full cinematic resolution.
+          </p>
+        </div>
+
+        <!-- Masonry Grid with all 13 authentic photos -->
+        <div class="memory-masonry-grid" id="memory-grid">
+          
+          <div class="memory-card reveal-on-scroll" data-index="0">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-01-traditional-kurta.jpg" alt="Traditional white kurta with golden temple pillar" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Traditional & Regal</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-1" data-index="1">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-02-heritage-bike-standing.jpg" alt="Standing by white bike at stone heritage building" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Heritage Ride</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-2" data-index="2">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-03-heritage-bike-sitting.jpg" alt="Seated on bike, looking into distance" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Quiet Reflection</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll" data-index="3">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-04-nature-mountain.jpg" alt="Mountain road, beanie & sunglasses" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Mountain Escapade</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-1" data-index="4">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-05-cafe-jordan.jpg" alt="Cafe patio, navy Jordan sweatshirt" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Urban Chill</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-2" data-index="5">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-06-hallway-yellow.jpg" alt="Hallway with bright yellow ceiling accent" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Modern Minimalist</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll" data-index="6">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-07-plaid-selfie.jpg" alt="Fitting room mirror selfie in blue plaid shirt" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Casual Classic</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-1" data-index="7">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-08-event-floral.jpg" alt="Festive setup, black and white floral shirt and sunglasses" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Festive Celebration</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-2" data-index="8">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-09-ocean-beach.jpg" alt="Standing in ocean water with GAP hoodie" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Ocean Shores</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll" data-index="9">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-10-forest-bridge.jpg" alt="Wooden footbridge in lush forest canopy" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Forest Canopy</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-1" data-index="10">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-11-temple-night.jpg" alt="Night temple gopuram illumination with tilak" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Serene Night</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll delay-2" data-index="11">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-12-sunset-car.jpg" alt="Sunset glow leaning on silver car outside O'Rica" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Golden Sunset</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="memory-card reveal-on-scroll" data-index="12">
+            <div class="memory-img-wrapper">
+              <img src="assets/images/photo-13-retail-knit-sweater.jpg" alt="Brown cable-knit collared sweater with silver chain in store" loading="lazy">
+              <div class="memory-overlay">
+                <span class="memory-tag">Timeless Style</span>
+                <span class="memory-expand-icon">⤢ Fullscreen</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================
+         SECTION 8 & 9: FINAL MESSAGE & GRAND CELEBRATION
+         ================================================== -->
+    <section id="final-wishes" class="final-section" aria-label="Final Birthday Message and Celebration">
+      <div class="section-container final-content-layout">
+        
+        <div class="final-card-wrapper glass-panel reveal-on-scroll">
+          <div class="final-portrait-holder">
+            <img 
+              src="assets/images/photo-13-retail-knit-sweater.jpg" 
+              alt="My brother looking forward with confidence and style" 
+              class="final-portrait-img"
+              loading="lazy"
+            >
+            <div class="final-portrait-glow"></div>
+          </div>
+
+          <div class="final-message-block">
+            <span class="final-kicker gold-gradient-text">HERE'S TO YOU.</span>
+
+            <div class="final-lines-stack">
+              <p class="final-subline">To the dreams you're chasing...</p>
+              <p class="final-subline">To the battles you're winning...</p>
+              <p class="final-subline">To the person you're becoming...</p>
+            </div>
+
+            <h2 class="final-brother-shoutout">
+              HAPPY BIRTHDAY,<br>
+              <span class="gold-gradient-text">BROTHER ❤️</span>
+            </h2>
+
+            <div class="final-creed-box">
+              <p class="creed-item">Keep dreaming.</p>
+              <p class="creed-item">Keep working.</p>
+              <p class="creed-item">Keep growing.</p>
+              <p class="creed-item">Keep shining.</p>
+            </div>
+
+            <p class="final-super-punchline">
+              Your best is yet to come. ✨
+            </p>
+
+            <div class="celebrate-action-group">
+              <button id="re-celebrate-btn" class="action-btn primary-glow-btn" aria-label="Trigger Fireworks Celebration">
+                <span>Celebrate Again 🎆</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================================================
+       FULLSCREEN LIGHTBOX MODAL
+       ================================================== -->
+  <div id="lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Photo Lightbox" hidden>
+    <div class="lightbox-backdrop" id="lightbox-backdrop"></div>
+    
+    <div class="lightbox-container">
+      <button id="lightbox-close-btn" class="lightbox-btn close-btn" aria-label="Close Lightbox (Esc)">
+        &times;
+      </button>
+
+      <button id="lightbox-prev-btn" class="lightbox-btn arrow-btn prev" aria-label="Previous Photo (Left Arrow)">
+        &#8592;
+      </button>
+
+      <div class="lightbox-img-wrapper">
+        <img id="lightbox-active-img" src="" alt="" class="lightbox-active-img">
+        <div class="lightbox-caption-bar">
+          <span id="lightbox-caption-text" class="lightbox-caption-text"></span>
+          <span id="lightbox-counter-text" class="lightbox-counter-text"></span>
+        </div>
+      </div>
+
+      <button id="lightbox-next-btn" class="lightbox-btn arrow-btn next" aria-label="Next Photo (Right Arrow)">
+        &#8594;
+      </button>
+    </div>
+  </div>
+
+  <!-- Minimal Glassmorphic Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p class="footer-text">
+        Crafted with love for my brother's special day &bull; 
+        <span class="gold-gradient-text">Forever in your corner</span> ✨
+      </p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

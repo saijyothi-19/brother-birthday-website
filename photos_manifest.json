@@ -1,0 +1,101 @@
+{
+  "total_batches_expected": 4,
+  "batches_received": 4,
+  "total_photos_count": 13,
+  "status": "ALL_BATCHES_COMPLETE",
+  "batches": [
+    {
+      "batch_id": 1,
+      "folder": "photos/batch_1",
+      "count": 5,
+      "photos": [
+        {
+          "file": "media_1790171713031.jpg",
+          "path": "photos/batch_1/media_1790171713031.jpg",
+          "tag": "outdoor-heritage-bike-standing"
+        },
+        {
+          "file": "media_1790171713126.jpg",
+          "path": "photos/batch_1/media_1790171713126.jpg",
+          "tag": "traditional-white-kurta-golden-pillar"
+        },
+        {
+          "file": "media_1790171713132.jpg",
+          "path": "photos/batch_1/media_1790171713132.jpg",
+          "tag": "outdoor-heritage-bike-sitting"
+        },
+        {
+          "file": "media_1790171713142.jpg",
+          "path": "photos/batch_1/media_1790171713142.jpg",
+          "tag": "cafe-plants-jordan23"
+        },
+        {
+          "file": "media_1790171713150.jpg",
+          "path": "photos/batch_1/media_1790171713150.jpg",
+          "tag": "nature-mountain-scenic-beanie"
+        }
+      ]
+    },
+    {
+      "batch_id": 2,
+      "folder": "photos/batch_2",
+      "count": 5,
+      "photos": [
+        {
+          "file": "media_1790171751580.jpg",
+          "path": "photos/batch_2/media_1790171751580.jpg",
+          "tag": "mirror-selfie-blue-plaid-shirt"
+        },
+        {
+          "file": "media_1790171751587.jpg",
+          "path": "photos/batch_2/media_1790171751587.jpg",
+          "tag": "hallway-yellow-ceiling-black-shirt"
+        },
+        {
+          "file": "media_1790171751715.jpg",
+          "path": "photos/batch_2/media_1790171751715.jpg",
+          "tag": "event-peach-drapes-floral-shirt-sunglasses"
+        },
+        {
+          "file": "media_1790171751717.jpg",
+          "path": "photos/batch_2/media_1790171751717.jpg",
+          "tag": "beach-ocean-gap-hoodie-sunglasses"
+        },
+        {
+          "file": "media_1790171751731.jpg",
+          "path": "photos/batch_2/media_1790171751731.jpg",
+          "tag": "wooden-bridge-forest-blue-shirt-linen-pants"
+        }
+      ]
+    },
+    {
+      "batch_id": 3,
+      "folder": "photos/batch_3",
+      "count": 2,
+      "photos": [
+        {
+          "file": "media_1790171896190.jpg",
+          "path": "photos/batch_3/media_1790171896190.jpg",
+          "tag": "night-temple-gopuram-white-gap-hoodie"
+        },
+        {
+          "file": "media_1790171910871.jpg",
+          "path": "photos/batch_3/media_1790171910871.jpg",
+          "tag": "sunset-orica-cafe-silver-car-blue-shirt"
+        }
+      ]
+    },
+    {
+      "batch_id": 4,
+      "folder": "photos/batch_4",
+      "count": 1,
+      "photos": [
+        {
+          "file": "media_1790172007286.jpg",
+          "path": "photos/batch_4/media_1790172007286.jpg",
+          "tag": "store-retail-brown-knit-sweater-silver-chain"
+        }
+      ]
+    }
+  ]
+}
