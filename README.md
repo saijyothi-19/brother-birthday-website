@@ -1,6 +1,6 @@
-# ✨ Birthday Celebration Website for My Brother
+# ✨ Birthday Celebration Website for My Annayya
 
-A cinematic, interactive, and emotional digital birthday experience created specifically for my brother. Built using clean, modern **HTML5, CSS3, and Vanilla JavaScript** with 3D card flips, 3D carousel wall, procedural ambient audio synth, fullscreen lightbox, and fireworks celebration.
+A cinematic, interactive, and emotional digital birthday experience created specifically for my Annayya. Built using clean, modern **HTML5, CSS3, and Vanilla JavaScript** with 3D card flips, 3D carousel wall, procedural ambient audio synth, fullscreen lightbox, and fireworks celebration.
 
 ---
 

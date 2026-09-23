@@ -1,6 +1,6 @@
 /**
  * BIRTHDAY CELEBRATION — PREMIUM INTERACTIVE ENGINE
- * Handcrafted Vanilla JavaScript for brother's special digital experience.
+ * Handcrafted Vanilla JavaScript for Annayya's special digital experience.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tag: 'Authentic Spirit',
       caption: 'Fitting room mirror selfie in blue-and-white plaid button-down shirt',
       quoteTitle: 'Always True to You',
-      quote: 'Be proud of who you are and where you\'ve come from. Every single day, you are shaping the leader, brother, and person you were destined to be.'
+      quote: 'Be proud of who you are and where you\'ve come from. Every single day, you are shaping the leader, Annayya, and person you were destined to be.'
     },
     {
       id: 8,
